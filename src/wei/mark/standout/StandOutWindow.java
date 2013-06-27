@@ -91,6 +91,11 @@ public abstract class StandOutWindow extends Service {
 	 * Intent action: Send data to a new or existing window.
 	 */
 	public static final String ACTION_SEND_DATA = "SEND_DATA";
+	
+	/*
+	 * Intent action: start MainActivity
+	 */
+	public static final String ACTION_MAIN_VIEW = "START_MAIN_VIEW";
 
 	/**
 	 * Intent action: Hide an existing window with an existing id. To enable the
@@ -291,6 +296,14 @@ public abstract class StandOutWindow extends Service {
 			Class<? extends StandOutWindow> cls) {
 		return new Intent(context, cls).setAction(ACTION_CLOSE_ALL);
 	}
+	
+	/*
+	 * 
+	 */
+	public static Intent getMainIntent(Context context,
+			Class<? extends StandOutWindow> cls) {
+		return new Intent(context, cls).setAction(ACTION_MAIN_VIEW);
+	}
 
 	/**
 	 * See {@link #sendData(Context, Class, int, int, Bundle, Class, int)}.
@@ -380,6 +393,8 @@ public abstract class StandOutWindow extends Service {
 
 			if (ACTION_SHOW.equals(action) || ACTION_RESTORE.equals(action)) {
 				show(id);
+			} else if (ACTION_MAIN_VIEW.equals(action)) {
+				startActivity(new Intent("org.colocation.datacollector.MY_MAIN_VIEW_ACTION").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 			} else if (ACTION_HIDE.equals(action)) {
 				hide(id);
 			} else if (ACTION_CLOSE.equals(action)) {
